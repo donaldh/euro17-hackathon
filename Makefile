@@ -9,13 +9,13 @@ SKIP=-DskipTests -Dcheckstyle.skip
 DEBUG=
 
 sshuttle:	## Start sshuttle to PNDA bastion
-	screen -S pnda-dmz sshuttle -e 'ssh -i ~/dmz-demo-bastion.pem' -H -r cloud-user@173.36.210.207 192.168.10.0/24
+	screen -S sshuttle-pnda sshuttle -e 'ssh -i ~/dmz-demo-bastion.pem' -H -r cloud-user@173.36.210.207 192.168.10.0/24
 
 ls:	## List the running screen sessions
 	screen -ls
 
 karaf:	## Run the karaf instance
-	cd $(COLLECTOR_DIR) && ./karaf/target/assembly/bin/karaf $(DEBUG)
+	cd $(COLLECTOR_DIR) && screen -S karaf ./karaf/target/assembly/bin/karaf $(DEBUG)
 
 collector:	$(KAFKA_AGENT)	## Build the if-table-collector
 	cd $(COLLECTOR_DIR) && mvn clean install $(SKIP)
