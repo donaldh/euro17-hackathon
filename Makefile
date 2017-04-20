@@ -12,7 +12,7 @@ sshuttle:	## Start sshuttle to PNDA bastion
 	screen -S sshuttle-pnda sshuttle -e 'ssh -i ~/dmz-demo-bastion.pem' -H -r cloud-user@173.36.210.207 192.168.10.0/24
 
 ls:	## List the running screen sessions
-	screen -ls
+	@screen -ls || true
 
 karaf:	## Run the karaf instance
 	cd $(COLLECTOR_DIR) && screen -S karaf ./karaf/target/assembly/bin/karaf $(DEBUG)
