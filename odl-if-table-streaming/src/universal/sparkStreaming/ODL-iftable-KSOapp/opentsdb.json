@@ -1,0 +1,8 @@
+[
+    {
+        "name": "collectd.inpkts"
+    },
+    {
+        "name": "collectd.outpkts"
+    }
+]
