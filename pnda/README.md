@@ -7,6 +7,10 @@ provided by PNDA. Here is a fork of the example-applications project:
 git clone git@github.com:donaldh/example-applications.git
 ```
 
+### Background Reading
+
+http://pnda.io/guide - The official PNDA documentation
+
 ### Developer Tools
 
 You're probably going to need a Scala development environment, such as the Eclipse based Scala
@@ -28,11 +32,11 @@ data from the kafka bus and produce datapoints in OpenTSDB. It will then be poss
 data dashboards using Grafana.
 
 I have taken the kafka-spark-opentsdb example from PNDA example-applications and adapted it to
-our needs. This application can be found in odl-if-table-streaming. The app can be deployed to
-PNDA, where it will receive events from if-table-collector and transform them into datapoints in
-OpenTSDB. It is then possible to build data dashboards using Grafana.
+our needs. This application can be found in pnda-kso-iftable-app. The app can be deployed to
+PNDA, where it will receive kafka events from the OpenDaylight if-table-collector and transform
+them into datapoints in OpenTSDB. It is then possible to build data dashboards using Grafana.
 
-First, build and package the odl-if-table-streaming application:
+First, build and package the pnda-kso-iftable-app application:
 
 ```
 cd odl-if-table-streaming
@@ -40,7 +44,7 @@ sbt assembly
 sbt universal:packageZipTarball
 ```
 
-Next, deploy the odl-if-table-streaming package to the PNDA cluster:
+Next, deploy the pnda-kso-iftable-app package to the PNDA cluster:
 
 ```
 curl -v -XPUT http://192.168.10.24:8888/packages/pnda-kso-iftable-app-0.0.1.tar.gz \
