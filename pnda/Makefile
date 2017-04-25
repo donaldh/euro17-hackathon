@@ -1,6 +1,7 @@
+LOGSTASH_DIR=../../logstash-2.4.0
 
 start:	## Start collecting
-	screen -S logstash -dm ../logstash-2.4.0/bin/logstash -f logstash-syslog.conf
+	screen -S logstash -dm $(LOGSTASH_DIR)/bin/logstash -f logstash-syslog.conf
 
 stop:	## Stop collecting
 	-screen -X -S logstash quit
