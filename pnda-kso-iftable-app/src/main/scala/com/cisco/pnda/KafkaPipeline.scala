@@ -40,15 +40,6 @@ class KafkaPipeline extends Serializable {
 
   def create() = {
 
-    val parseMessages = (messagesDstream: DStream[DataPlatformEvent]) => {
-
-      val parsedMessages = messagesDstream.flatMap(dataPlatformEvent => {
-        val parsed = dataPlatformEvent.getRawdata();
-        Some(parsed);
-      });
-      parsedMessages
-    }: DStream[String];
-
     val props = AppConfig.loadProperties();
     val checkpointDirectory = props.getProperty("app.checkpoint_path");
     val batchSizeSeconds = Integer.parseInt(props.getProperty("app.batch_size_seconds"));
@@ -62,12 +53,10 @@ class KafkaPipeline extends Serializable {
     }
 
     val inputStream = new KafkaInput().readFromKafka(ssc);
-    val parsedStream = parseMessages(inputStream);
     val writeCounts: DStream[Integer] =
-
       new OpenTSDBOutput().putOpentsdb(
         props.getProperty("opentsdb.ip"),
-        parsedStream);
+        inputStream);
 
     writeCounts.reduce(_ + _).print(1);
     ssc;

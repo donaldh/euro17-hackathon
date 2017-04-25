@@ -4,6 +4,6 @@
     "batch_size_seconds" : "2",
     "processing_parallelism" : "1",
     "checkpoint_path":"",
-    "input_topic": "collectd",
+    "input_topic": "odl",
     "consume_from_beginning":"false"
 }

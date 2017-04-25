@@ -34,25 +34,27 @@ import org.apache.http.impl.client.DefaultHttpClient
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import org.json4s.JsonDSL._
+import com.cisco.pnda.model.DataPlatformEvent
 
 class OpenTSDBOutput extends Serializable {
 
   def putOpentsdb[T](opentsdbIP: String,
-    stream: DStream[String]) = {
+    stream: DStream[DataPlatformEvent]) = {
     stream.mapPartitions(partition => {
       var count = 0;
-      partition.foreach(rowData => {
-        val json = parse(rowData.replace("'", "\""))
-        val host = compact(render((json \\ "host"))).replace("\"", "")
-        val interface = compact(render((json \\ "interface"))).replace("\"", "")
-        val timestampStr = compact(render((json \\ "timestamp"))).replace("\"", "")
-        val inPkts = (compact(render((json \\ "inPkts"))).replace("\"", "")).toInt
-        val outPkts = (compact(render((json \\ "outPkts"))).replace("\"", "")).toInt
-        val timestamp = Timestamp.valueOf(timestampStr.replace("T", " ").replace("Z", "")).getTime
+      partition.foreach(event => {
+        val host = event.getHostIp
+        val timestamp = event.getTimestamp
+
+        val payload = scala.xml.XML.loadString(event.getRawdata);
+
+        val interface = (payload \\ "IfDescr").text
+        val inPkts = (payload \\ "IfInUcastPkts").text
+        val outPkts = (payload \\ "IfOutUcastPkts").text
 
         List(("inpkts", inPkts), ("outpkts", outPkts)).map{ case (name, value) => {
           val body = f"""{
-                    |        "metric": "collectd.$name" ,
+                    |        "metric": "iftable.$name" ,
                     |        "value": "$value",
                     |        "timestamp": $timestamp,
                     |        "tags": {"host": "$host", "interface": "$interface"}
