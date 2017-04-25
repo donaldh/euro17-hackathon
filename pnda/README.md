@@ -18,7 +18,7 @@ IDE - http://scala-ide.org/
 
 http://download.scala-ide.org/sdk/lithium/e46/scala211/stable/site
 
-At the very least you'll want the Scala built tool `sbt`
+At the very least you'll want the Scala built tool `sbt`:
 
 ```
 brew install sbt
@@ -38,16 +38,18 @@ them into datapoints in OpenTSDB. It is then possible to build data dashboards u
 
 First, build and package the pnda-kso-iftable-app application:
 
-```
-cd odl-if-table-streaming
-sbt assembly
-sbt universal:packageZipTarball
+```sh
+cd pnda-kso-iftable-app
+make app        # sbt assembly
+make package    # sbt universal:packageZipTarball
 ```
 
 Next, deploy the pnda-kso-iftable-app package to the PNDA cluster:
 
-```
-curl -v -XPUT http://192.168.10.24:8888/packages/pnda-kso-iftable-app-0.0.1.tar.gz \
-  -d @target/universal/pnda-kso-iftable-app-0.0.1.tar.gz
+```sh
+make deploy
+
+# curl -v -XPUT http://192.168.10.24:8888/packages/pnda-kso-iftable-app-0.0.1.tar.gz \
+#   --data-binary @target/universal/pnda-kso-iftable-app-0.0.1.tar.gz
 ```
 
