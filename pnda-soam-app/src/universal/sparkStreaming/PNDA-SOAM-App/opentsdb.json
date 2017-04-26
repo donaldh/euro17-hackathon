@@ -1,0 +1,11 @@
+[
+    {
+        "name": "soam.delay.twowaymin"
+    },
+    {
+        "name": "soam.delay.twowayavg"
+    },
+    {
+        "name": "soam.delay.twowaymax"
+    }
+]
