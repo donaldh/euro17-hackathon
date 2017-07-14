@@ -2,9 +2,9 @@ import AssemblyKeys._
 
 assemblySettings
 
-jarName in assembly := "PndaKsoIftableApp.jar"
+jarName in assembly := "PndaIftableApp.jar"
 
-target in assembly:= file("src/universal/sparkStreaming/PndaKsoIftableApp")
+target in assembly:= file("src/universal/sparkStreaming/PndaIftableApp")
 
 mergeStrategy in assembly := {
   case PathList("META-INF", "jboss-beans.xml") => MergeStrategy.first

@@ -1,4 +1,4 @@
-name := "PNDA KSO iftable app"
+name := "pnda-iftable-app"
 
 version := "0.0.1"
 

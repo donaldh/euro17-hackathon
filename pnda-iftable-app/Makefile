@@ -1,5 +1,5 @@
-SERVER=http://192.168.10.24:8888
-PACKAGE=pnda-kso-iftable-app-0.0.1.tar.gz
+SERVER=http://pnda-cdh-edge:8888
+PACKAGE=pnda-iftable-app-0.0.1.tar.gz
 
 app:		## Build the application jar
 	sbt assembly
